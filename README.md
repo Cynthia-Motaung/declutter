@@ -44,7 +44,7 @@ A beautiful, intuitive digital journal application designed to help you capture 
 ### Installation
 
 **Clone the Repository**
-`` bash
+```bash
 git clone https://github.com/Cynthia-Motaung/declutter.git
 cd declutter-journal 
 
