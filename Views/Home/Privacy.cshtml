@@ -1,0 +1,104 @@
+﻿@{
+    ViewData["Title"] = "Privacy Policy";
+}
+
+<link rel="stylesheet" href="/css/privacy.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<div class="privacy-container">
+    <div class="privacy-header">
+        <div class="privacy-icon">
+            <i class="fas fa-shield-alt"></i>
+        </div>
+        <h1>Privacy Policy</h1>
+        <p class="last-updated">Last Updated: @DateTime.Now.ToString("MMMM dd, yyyy")</p>
+    </div>
+
+    <div class="section">
+        <h2><i class="fas fa-info-circle section-icon"></i>Introduction</h2>
+        <p>Welcome to <span class="highlight">My Journal</span>. Your privacy is of utmost importance to us. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our journal application.</p>
+        <p>We are committed to protecting your personal information and your right to privacy. If you have any questions or concerns about this policy, please contact us.</p>
+    </div>
+
+    <div class="section">
+        <h2><i class="fas fa-database section-icon"></i>Information We Collect</h2>
+        <p>We collect information that you provide directly to us when using our service:</p>
+        <ul>
+            <li><span class="highlight">Journal Entries</span>: The content you write in your journal</li>
+            <li><span class="highlight">Account Information</span>: Your name, email address, and profile preferences</li>
+            <li><span class="highlight">Tags & Categories</span>: Organizational tags you create for your entries</li>
+            <li><span class="highlight">Usage Data</span>: Information about how you use our application</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2><i class="fas fa-lock section-icon"></i>How We Use Your Information</h2>
+        <p>We use the information we collect to:</p>
+        <ul>
+            <li>Provide, maintain, and improve our services</li>
+            <li>Personalize your journaling experience</li>
+            <li>Allow you to access your entries across devices</li>
+            <li>Respond to your comments and questions</li>
+            <li>Send you technical notices and support messages</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2><i class="fas fa-shield-virus section-icon"></i>Data Protection</h2>
+        <p>We implement appropriate security measures to protect your personal information:</p>
+        <ul>
+            <li><span class="highlight">Encryption</span>: All data is encrypted in transit and at rest</li>
+            <li><span class="highlight">Access Controls</span>: Strict access controls limit who can view your data</li>
+            <li><span class="highlight">Regular Audits</span>: We conduct regular security assessments</li>
+            <li><span class="highlight">Backup Systems</span>: Your data is regularly backed up for protection</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2><i class="fas fa-eye-slash section-icon"></i>Your Privacy Rights</h2>
+        <p>You have the right to:</p>
+        <ul>
+            <li>Access and receive a copy of your personal data</li>
+            <li>Rectify or update your personal information</li>
+            <li>Delete your account and associated data</li>
+            <li>Export your journal entries at any time</li>
+            <li>Object to certain processing activities</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2><i class="fas fa-cookie section-icon"></i>Cookies & Tracking</h2>
+        <p>We use minimal cookies and similar technologies to:</p>
+        <ul>
+            <li>Keep you signed in to your account</li>
+            <li>Remember your preferences</li>
+            <li>Understand how our service is being used</li>
+        </ul>
+        <p>We do not use cookies for advertising purposes or share your data with third-party advertisers.</p>
+    </div>
+
+    <div class="contact-info">
+        <h3><i class="fas fa-envelope"></i> Contact Us</h3>
+        <p>If you have any questions about this Privacy Policy, please contact us at:</p>
+        <a href="mailto:privacy@myjournal.app" class="contact-email">
+            <i class="fas fa-envelope"></i> privacy@myjournal.app
+        </a>
+    </div>
+
+    <a asp-action="Index" asp-controller="Home" class="back-button">
+        <i class="fas fa-arrow-left"></i> Back to Home
+    </a>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Simple fade-in animation for the privacy container
+        const privacyContainer = document.querySelector('.privacy-container');
+        privacyContainer.style.opacity = '0';
+        privacyContainer.style.transition = 'opacity 0.5s ease-in-out';
+
+        setTimeout(() => {
+            privacyContainer.style.opacity = '1';
+        }, 100);
+    });
+</script>

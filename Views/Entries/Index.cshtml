@@ -1,0 +1,688 @@
+﻿@model IEnumerable<Entry>
+
+<link rel="stylesheet" href="/css/entry.css" />
+
+<div class="container">
+    <header>
+        <h1>My Journal Entries</h1>
+        <p class="subtitle">A collection of thoughts, reflections, and memories</p>
+        <a class="create-btn" asp-action="Create">
+            <i class="fas fa-plus"></i> Create New Entry
+        </a>
+    </header>
+
+    <!-- Search and Filter Section -->
+    <div class="search-filter-card">
+        <div class="search-header" id="searchToggle">
+            <h2 class="search-title">Search & Filter</h2>
+            <span class="search-toggle"><i class="fas fa-chevron-down"></i></span>
+        </div>
+        <div class="search-form" id="searchForm">
+            <div class="search-row">
+                <div class="search-group">
+                    <label class="search-label">Search Text</label>
+                    <input type="text" class="search-input" id="searchText" placeholder="Search in titles and content...">
+                </div>
+                <div class="search-group">
+                    <label class="search-label">Tags</label>
+                    <div class="tag-container">
+                        @if (ViewData["AllTags"] != null)
+                        {
+                            foreach (var tag in (List<Tag>)ViewData["AllTags"])
+                            {
+                                <input type="checkbox" class="tag-checkbox" id="tag-@tag.Id" value="@tag.Name">
+                                <label for="tag-@tag.Id" class="tag-label">@tag.Name</label>
+                            }
+                        }
+                        else
+                        {
+                            <p class="text-muted">No tags available</p>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="search-actions">
+                <button class="btn-clear" id="clearSearch">Clear</button>
+                <button class="btn-search" id="applySearch">Apply Filters</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="entries-grid">
+        @if (Model != null && Model.Any())
+        {
+            @foreach (var item in Model)
+            {
+                <div class="entry-card" data-title="@item.Title.ToLower()"
+                     data-content="@Html.Raw(item.Content)"
+                     data-tags="@(item.Tags != null ? string.Join(",", item.Tags.Select(t => t.Name.ToLower())) : "")">
+                    <div class="card-content">
+                        <h3>@item.Title</h3>
+                        <div class="entry-date">@item.CreatedAt.ToString("MMMM dd, yyyy")</div>
+                        <div class="entry-content">
+                            @Html.Raw(item.Content)
+                        </div>
+                        <div class="tags">
+                            @if (item.Tags != null && item.Tags.Any())
+                            {
+                                foreach (var tag in item.Tags)
+                                {
+                                    <span class="tag">@tag.Name</span>
+                                }
+                            }
+                            else
+                            {
+                                <span class="tag">No Tags</span>
+                            }
+                        </div>
+                        <div class="card-actions">
+                            <a asp-action="Edit" asp-route-id="@item.Id" asp-route-slug="@item.Slug"><i class="fas fa-edit"></i> Edit</a>
+                            <a href="#" class="view-entry" data-title="@item.Title"
+                               data-date="@item.CreatedAt.ToString("MMMM dd, yyyy")"
+                               data-content="@item.Content"
+                               data-tags="@(item.Tags != null ? string.Join(",", item.Tags.Select(t => t.Name)) : "")">
+                                <i class="fas fa-eye"></i> View
+                            </a>
+                            <a href="#" class="delete-entry" data-id="@item.Id" data-title="@item.Title">
+                                <i class="fas fa-trash"></i> Delete
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <p class="no-entries text-center">
+                <i class="fas fa-book-open no-entries-icon"></i>
+                <span class="no-entries-title">No journal entries to display yet.</span>
+                <span class="no-entries-subtitle">Create your first entry to get started!</span>
+            </p>
+        }
+    </div>
+</div>
+
+<!-- View Entry Modal -->
+<div id="entry-modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-content">
+        <button class="modal-close" aria-label="Close modal">&times;</button>
+        <h3 id="modal-title"></h3>
+        <div id="modal-date" class="modal-date"></div>
+        <div id="modal-text" class="modal-text"></div>
+        <div id="modal-tags" class="modal-tags"></div>
+    </div>
+</div>
+
+<!-- Hidden form for delete operation -->
+<form id="delete-form" asp-action="Delete" method="post" style="display: none;">
+    <input type="hidden" id="delete-entry-id" name="id" value="" />
+    @Html.AntiForgeryToken()
+</form>
+
+<style>
+    /* Search and Filter Styles */
+    .search-filter-card {
+        background: #fffef5;
+        border: 1px solid #d6cfbb;
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    .search-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+        cursor: pointer;
+    }
+
+    .search-title {
+        font-family: 'Georgia', serif;
+        color: #4a4238;
+        font-size: 1.2rem;
+        margin: 0;
+    }
+
+    .search-toggle {
+        color: #8a7f68;
+        font-size: 1.2rem;
+    }
+
+    .search-form {
+        display: block;
+    }
+
+    .search-row {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .search-group {
+        flex: 1;
+        min-width: 250px;
+    }
+
+    .search-label {
+        display: block;
+        font-weight: 500;
+        color: #6d6451;
+        margin-bottom: 0.5rem;
+    }
+
+    .search-input {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #d6cfbb;
+        border-radius: 4px;
+        background: #fff;
+        font-family: 'Raleway', sans-serif;
+        transition: all 0.3s ease;
+    }
+
+    .search-input:focus {
+        outline: none;
+        border-color: #8a7f68;
+        box-shadow: 0 0 0 3px rgba(138, 127, 104, 0.2);
+    }
+
+    .tag-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+    }
+
+    .tag-checkbox {
+        display: none;
+    }
+
+    .tag-label {
+        display: inline-block;
+        padding: 0.4rem 0.8rem;
+        background: #f0e9d2;
+        border: 1px solid #d6cfbb;
+        border-radius: 20px;
+        color: #6d6451;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-size: 0.9rem;
+    }
+
+    .tag-checkbox:checked + .tag-label {
+        background: #8a7f68;
+        color: #fffef5;
+        border-color: #766b56;
+    }
+
+    .search-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+
+    .btn-search {
+        background: #8a7f68;
+        color: #fffef5;
+        padding: 0.6rem 1.5rem;
+        border: none;
+        border-radius: 4px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .btn-search:hover {
+        background: #6d6451;
+    }
+
+    .btn-clear {
+        background: transparent;
+        color: #8a7f68;
+        padding: 0.6rem 1.5rem;
+        border: 1px solid #8a7f68;
+        border-radius: 4px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .btn-clear:hover {
+        background: #f0e9d2;
+    }
+
+    .no-entries {
+        text-align: center;
+        padding: 3rem;
+        color: #8a7f68;
+        grid-column: 1 / -1;
+    }
+
+    .no-entries-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        color: #d6cfbb;
+    }
+
+    .no-entries-title {
+        display: block;
+        font-family: 'Georgia', serif;
+        margin-bottom: 0.5rem;
+        color: #6d6451;
+        font-size: 1.2rem;
+    }
+
+    .no-entries-subtitle {
+        display: block;
+        font-size: 0.9rem;
+    }
+
+    /* Responsive adjustments */
+    @@media (max-width: 768px) {
+        .search-row {
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .search-group {
+            min-width: 100%;
+        }
+    }
+
+    .entry-card {
+        background: #fffef5;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        height: 380px; /* Fixed height for consistency */
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.3s ease;
+    }
+
+        .entry-card:hover {
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+            transform: translateY(-5px);
+        }
+
+    .card-content {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        padding: 1.5rem;
+    }
+
+    .card-header {
+        margin-bottom: 1rem;
+        border-bottom: 1px solid #f0e9d2;
+        padding-bottom: 0.75rem;
+    }
+
+        .card-header h3 {
+            font-family: 'Georgia', serif;
+            color: #4a4238;
+            margin: 0 0 0.25rem 0;
+            font-size: 1.25rem;
+            line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+    .entry-date {
+        color: #8a7f68;
+        font-size: 0.85rem;
+        font-style: italic;
+    }
+
+    .scrollable-content {
+        flex: 1;
+        overflow-y: auto;
+        margin-bottom: 1rem;
+        padding-right: 5px;
+    }
+
+        /* Custom scrollbar for the content area */
+        .scrollable-content::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .scrollable-content::-webkit-scrollbar-track {
+            background: #f0e9d2;
+            border-radius: 10px;
+        }
+
+        .scrollable-content::-webkit-scrollbar-thumb {
+            background: #d6cfbb;
+            border-radius: 10px;
+        }
+
+            .scrollable-content::-webkit-scrollbar-thumb:hover {
+                background: #8a7f68;
+            }
+
+    .entry-content {
+        color: #6d6451;
+        line-height: 1.6;
+        margin-bottom: 1rem;
+    }
+
+        .entry-content p {
+            margin-bottom: 1rem;
+        }
+
+            .entry-content p:last-child {
+                margin-bottom: 0;
+            }
+
+    .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: auto;
+    }
+
+    .tag {
+        background: #f0e9d2;
+        color: #6d6451;
+        padding: 0.3rem 0.7rem;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        display: inline-block;
+    }
+
+    .card-actions {
+        display: flex;
+        justify-content: space-between;
+        padding-top: 1rem;
+        margin-top: auto;
+        border-top: 1px solid #f0e9d2;
+    }
+
+        .card-actions a {
+            color: #8a7f68;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+            .card-actions a:hover {
+                color: #6d6451;
+            }
+
+    /* Responsive adjustments */
+    @@media (max-width: 768px) {
+        .card-actions {
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+            .card-actions a {
+                justify-content: center;
+                padding: 0.5rem;
+                background: #f9f6eb;
+                border-radius: 4px;
+            }
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const cards = document.querySelectorAll('.entry-card');
+        const viewModal = document.getElementById('entry-modal');
+        const deleteForm = document.getElementById('delete-form');
+        const deleteEntryId = document.getElementById('delete-entry-id');
+        const modalTitle = document.getElementById('modal-title');
+        const modalDate = document.getElementById('modal-date');
+        const modalText = document.getElementById('modal-text');
+        const modalTags = document.getElementById('modal-tags');
+        const modalCloseButtons = document.querySelectorAll('.modal-close');
+
+        // Search and filter functionality
+        const searchToggle = document.getElementById('searchToggle');
+        const searchForm = document.getElementById('searchForm');
+        const searchText = document.getElementById('searchText');
+        const tagCheckboxes = document.querySelectorAll('.tag-checkbox');
+        const applySearch = document.getElementById('applySearch');
+        const clearSearch = document.getElementById('clearSearch');
+
+        // Toggle search form visibility
+        searchToggle.addEventListener('click', function() {
+            searchForm.classList.toggle('d-none');
+            const icon = this.querySelector('i');
+            if (searchForm.classList.contains('d-none')) {
+                icon.classList.remove('fa-chevron-up');
+                icon.classList.add('fa-chevron-down');
+            } else {
+                icon.classList.remove('fa-chevron-down');
+                icon.classList.add('fa-chevron-up');
+            }
+        });
+
+        // Apply search and filters
+        applySearch.addEventListener('click', function() {
+            const searchValue = searchText.value.toLowerCase();
+            const selectedTags = Array.from(tagCheckboxes)
+                .filter(checkbox => checkbox.checked)
+                .map(checkbox => checkbox.value.toLowerCase());
+
+            let hasVisibleEntries = false;
+
+            cards.forEach(entry => {
+                const title = entry.getAttribute('data-title');
+                const content = entry.getAttribute('data-content');
+                const tags = entry.getAttribute('data-tags').split(',');
+
+                const matchesSearch = searchValue === '' ||
+                                    title.includes(searchValue) ||
+                                    content.includes(searchValue);
+
+                const matchesTags = selectedTags.length === 0 ||
+                                  selectedTags.some(tag => tags.includes(tag));
+
+                if (matchesSearch && matchesTags) {
+                    entry.style.display = 'block';
+                    hasVisibleEntries = true;
+                } else {
+                    entry.style.display = 'none';
+                }
+            });
+
+            // Show message if no entries match filters
+            const noEntriesElement = document.querySelector('.no-entries');
+            if (!hasVisibleEntries && cards.length > 0) {
+                if (!noEntriesElement) {
+                    const noEntries = document.createElement('p');
+                    noEntries.className = 'no-entries text-center';
+                    noEntries.innerHTML = `
+                        <i class="fas fa-search no-entries-icon"></i>
+                        <span class="no-entries-title">No entries match your search criteria.</span>
+                        <span class="no-entries-subtitle">Try adjusting your filters.</span>
+                    `;
+                    document.querySelector('.entries-grid').appendChild(noEntries);
+                } else {
+                    noEntriesElement.style.display = 'block';
+                }
+            } else if (noEntriesElement) {
+                noEntriesElement.style.display = 'none';
+            }
+
+            toastr.success('Filters applied successfully');
+        });
+
+        // Clear search and filters
+        clearSearch.addEventListener('click', function() {
+            searchText.value = '';
+            tagCheckboxes.forEach(checkbox => checkbox.checked = false);
+
+            cards.forEach(entry => {
+                entry.style.display = 'block';
+            });
+
+            // Hide no entries message if shown
+            const noEntriesElement = document.querySelector('.no-entries');
+            if (noEntriesElement && cards.length > 0) {
+                noEntriesElement.style.display = 'none';
+            }
+
+            toastr.info('Filters cleared');
+        });
+
+        // Allow pressing Enter to search
+        searchText.addEventListener('keyup', function(event) {
+            if (event.key === 'Enter') {
+                applySearch.click();
+            }
+        });
+
+        // Card entrance animation
+        cards.forEach((card, index) => {
+            setTimeout(() => {
+                card.style.opacity = 1;
+                card.style.transform = 'translateY(0)';
+            }, 100 + (index * 100));
+        });
+
+        // Open view modal when view button is clicked
+        document.querySelectorAll('.view-entry').forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+
+                // Get entry data from data attributes
+                const title = button.getAttribute('data-title');
+                const date = button.getAttribute('data-date');
+                const content = button.getAttribute('data-content');
+                const tags = button.getAttribute('data-tags');
+
+                // Populate modal with entry data
+                modalTitle.textContent = title;
+                modalDate.textContent = date;
+                modalText.innerHTML = content;
+
+                // Handle tags
+                modalTags.innerHTML = '';
+                if (tags) {
+                    const tagArray = tags.split(',');
+                    tagArray.forEach(tag => {
+                        if (tag.trim() !== '') {
+                            const tagElement = document.createElement('span');
+                            tagElement.className = 'modal-tag';
+                            tagElement.textContent = tag.trim();
+                            modalTags.appendChild(tagElement);
+                        }
+                    });
+                } else {
+                    const noTagElement = document.createElement('span');
+                    noTagElement.className = 'modal-tag';
+                    noTagElement.textContent = 'No Tags';
+                    modalTags.appendChild(noTagElement);
+                }
+
+                // Show modal
+                viewModal.style.display = 'flex';
+            });
+        });
+
+        // SweetAlert2 for delete confirmation
+        document.querySelectorAll('.delete-entry').forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+
+                // Get entry data from data attributes
+                const id = button.getAttribute('data-id');
+                const title = button.getAttribute('data-title');
+
+                Swal.fire({
+                    title: "Are you sure?",
+                    html: `You are about to delete the entry: <strong>"${title}"</strong><br>This action cannot be undone.`,
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#d33",
+                    cancelButtonColor: "#3085d6",
+                    confirmButtonText: "Yes, delete it!",
+                    cancelButtonText: "Cancel",
+                    reverseButtons: true,
+                    customClass: {
+                        popup: 'sweetalert-custom',
+                        confirmButton: 'btn btn-danger',
+                        cancelButton: 'btn btn-secondary'
+                    },
+                    buttonsStyling: false
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Set the entry ID and submit the form
+                        deleteEntryId.value = id;
+                        deleteForm.submit();
+                    }
+                });
+            });
+        });
+
+        // Close modals when close button is clicked
+        modalCloseButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                document.querySelectorAll('.modal').forEach(modal => {
+                    modal.style.display = 'none';
+                });
+            });
+        });
+
+        // Close modals when clicking outside
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        });
+
+        // Close modals with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal').forEach(modal => {
+                    modal.style.display = 'none';
+                });
+            }
+        });
+    });
+</script>
+
+<!-- Optional: Add some custom CSS for SweetAlert2 -->
+<style>
+    .sweetalert-custom {
+        font-family: 'Nunito', sans-serif;
+        border-radius: 12px;
+    }
+
+    .swal2-popup .btn {
+        padding: 0.5rem 1.5rem;
+        border-radius: 6px;
+        font-weight: 600;
+        margin: 0 0.5rem;
+    }
+
+    .swal2-popup .btn-danger {
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+
+    .swal2-popup .btn-secondary {
+        background-color: #6c757d;
+        border-color: #6c757d;
+    }
+
+    .swal2-popup .btn:hover {
+        opacity: 0.9;
+        transform: translateY(-1px);
+    }
+</style>

@@ -1,0 +1,217 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Raleway", sans-serif;
+    background: #f7f3e9;
+    color: #333;
+    line-height: 1.6;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="none" stroke="rgba(153, 141, 115, 0.1)" stroke-width="1"/></svg>');
+    padding: 2rem;
+}
+
+.privacy-container {
+    max-width: 900px;
+    margin: 0 auto;
+    background: #fffef5;
+    border-radius: 10px;
+    padding: 3rem;
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.1), inset 0 0 15px #f0e9d2;
+    position: relative;
+    border: 1px solid #d6cfbb;
+}
+
+    /* Worn paper torn edges */
+    .privacy-container::before,
+    .privacy-container::after {
+        content: "";
+        position: absolute;
+        pointer-events: none;
+        border-radius: 10px;
+        box-shadow: 0 0 6px 2px #c4bfa8 inset, 0 0 1px 1px #d7d3bf inset;
+    }
+
+    .privacy-container::before {
+        top: -8px;
+        left: -8px;
+        width: 30px;
+        height: 30px;
+        background: linear-gradient(135deg, transparent 20%, #fffef5 21%, #fffef5 80%, transparent 81%);
+        filter: brightness(0.9);
+        clip-path: polygon(0 0, 100% 15%, 15% 100%, 0 100%);
+        box-shadow: 0 0 6px 2px #b8b294 inset;
+        z-index: 2;
+    }
+
+    .privacy-container::after {
+        bottom: -8px;
+        right: -8px;
+        width: 30px;
+        height: 30px;
+        background: linear-gradient(315deg, transparent 20%, #fffef5 21%, #fffef5 80%, transparent 81%);
+        filter: brightness(0.85);
+        clip-path: polygon(85% 0, 100% 0, 100% 100%, 0 85%);
+        box-shadow: 0 0 6px 2px #b8b294 inset;
+        z-index: 2;
+    }
+
+.privacy-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    position: relative;
+    padding-bottom: 1.5rem;
+}
+
+    .privacy-header::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 25%;
+        right: 25%;
+        height: 2px;
+        background: linear-gradient(to right, transparent, #8a7f68, transparent);
+    }
+
+h1 {
+    font-size: 2.8rem;
+    color: #4a4238;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 0.5rem;
+    letter-spacing: 1px;
+}
+
+.last-updated {
+    color: #8a7f68;
+    font-style: italic;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.privacy-icon {
+    font-size: 3rem;
+    color: #8a7f68;
+    margin-bottom: 1.5rem;
+}
+
+.section {
+    margin-bottom: 2.5rem;
+    padding: 1.5rem;
+    background: rgba(240, 233, 210, 0.3);
+    border-radius: 8px;
+    border-left: 4px solid #8a7f68;
+}
+
+    .section h2 {
+        color: #4a4238;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+.section-icon {
+    color: #8a7f68;
+    font-size: 1.2rem;
+}
+
+.section p {
+    color: #6d6451;
+    margin-bottom: 1rem;
+    line-height: 1.7;
+}
+
+.section ul {
+    color: #6d6451;
+    margin-left: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.section li {
+    margin-bottom: 0.5rem;
+}
+
+.highlight {
+    background: #f0e9d2;
+    padding: 0.2rem 0.5rem;
+    border-radius: 3px;
+    font-weight: 600;
+    color: #4a4238;
+}
+
+.contact-info {
+    background: #f0e9d2;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-top: 2rem;
+    text-align: center;
+}
+
+    .contact-info h3 {
+        color: #4a4238;
+        margin-bottom: 1rem;
+    }
+
+.contact-email {
+    color: #8a7f68;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+    .contact-email:hover {
+        color: #6d6451;
+        text-decoration: underline;
+    }
+
+.back-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #8a7f68;
+    text-decoration: none;
+    font-weight: 600;
+    margin-top: 2rem;
+    transition: color 0.3s ease;
+}
+
+    .back-button:hover {
+        color: #6d6451;
+    }
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    body {
+        padding: 1rem;
+    }
+
+    .privacy-container {
+        padding: 2rem;
+    }
+
+    h1 {
+        font-size: 2.2rem;
+    }
+
+    .section {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .privacy-container {
+        padding: 1.5rem;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    .privacy-icon {
+        font-size: 2.5rem;
+    }
+}

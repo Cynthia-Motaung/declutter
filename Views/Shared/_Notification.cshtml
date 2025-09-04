@@ -1,0 +1,29 @@
+﻿@using System.Text.Json
+@if (TempData["Notification"] != null)
+{
+    <script>
+        $(document).ready(function () {
+            try {
+                var notificationJson = '@Html.Raw(TempData["Notification"])';
+                var notification = JSON.parse(notificationJson);
+
+                toastr.options = {
+                    closeButton: true,
+                    progressBar: true,
+                    positionClass: "toast-bottom-right",
+                    timeOut: 5000,
+                    extendedTimeOut: 1000,
+                    showEasing: "swing",
+                    hideEasing: "linear",
+                    showMethod: "fadeIn",
+                    hideMethod: "fadeOut",
+                    escapeHtml: false
+                };
+
+                toastr[notification.type](notification.message, notification.title);
+            } catch (e) {
+                console.error('Error parsing notification:', e);
+            }
+        });
+    </script>
+}

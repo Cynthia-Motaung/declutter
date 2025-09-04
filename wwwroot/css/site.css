@@ -1,0 +1,523 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Raleway", sans-serif;
+    background: #f7f3e9;
+    color: #333;
+    line-height: 1.6;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="none" stroke="rgba(153, 141, 115, 0.1)" stroke-width="1"/></svg>');
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header styling */
+header {
+    background: #fffef5 !important;
+    border-bottom: 2px solid #d6cfbb !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.navbar-brand {
+    font-family: 'Georgia', serif;
+    font-weight: bold;
+    color: #4a4238 !important;
+    font-size: 1.8rem;
+}
+
+.nav-link {
+    color: #6d6451 !important;
+    font-family: 'Georgia', serif;
+    transition: color 0.3s ease;
+}
+
+    .nav-link:hover {
+        color: #4a4238 !important;
+    }
+
+/* Main content */
+.container {
+    flex: 1;
+    max-width: 1200px;
+    padding: 2rem;
+}
+
+main {
+    padding: 2rem 0;
+}
+
+/* Footer */
+
+
+footer {
+    background: #fffef5 !important;
+    border-top: 2px solid #d6cfbb !important;
+    color: #6d6451 !important;
+    font-family: 'Georgia', serif;
+    flex-shrink: 0;
+    margin-top: auto;
+    width: 100%;
+}
+
+    footer a {
+        color: #8a7f68 !important;
+        text-decoration: none;
+    }
+
+        footer a:hover {
+            color: #6d6451 !important;
+            text-decoration: underline;
+        }
+
+/* Journal editor styles */
+.journal-editor {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.editor-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    position: relative;
+    padding-bottom: 1.5rem;
+}
+
+    .editor-header::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 25%;
+        right: 25%;
+        height: 2px;
+        background: linear-gradient(to right, transparent, #8a7f68, transparent);
+    }
+
+.editor-title {
+    font-size: 2.2rem;
+    color: #4a4238;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 0.5rem;
+    letter-spacing: 1px;
+}
+
+.editor-form {
+    background: #fffef5;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.1), inset 0 0 15px #f0e9d2;
+    position: relative;
+    padding: 2.5rem;
+    overflow: hidden;
+    filter: drop-shadow(0 1px 1px rgba(0,0,0,0.1));
+}
+
+    /* Worn paper torn edges on form using pseudo-elements */
+    .editor-form::before,
+    .editor-form::after {
+        content: "";
+        position: absolute;
+        pointer-events: none;
+        border-radius: 10px;
+        box-shadow: 0 0 6px 2px #c4bfa8 inset, 0 0 1px 1px #d7d3bf inset;
+    }
+
+    /* Top-left "torn" corner */
+    .editor-form::before {
+        top: -8px;
+        left: -8px;
+        width: 30px;
+        height: 30px;
+        background: linear-gradient(135deg, transparent 20%, #fffef5 21%, #fffef5 80%, transparent 81%);
+        filter: brightness(0.9);
+        clip-path: polygon(0 0, 100% 15%, 15% 100%, 0 100%);
+        box-shadow: 0 0 6px 2px #b8b294 inset;
+        z-index: 2;
+    }
+
+    /* Bottom-right "torn" corner */
+    .editor-form::after {
+        bottom: -8px;
+        right: -8px;
+        width: 30px;
+        height: 30px;
+        background: linear-gradient(315deg, transparent 20%, #fffef5 21%, #fffef5 80%, transparent 81%);
+        filter: brightness(0.85);
+        clip-path: polygon(85% 0, 100% 0, 100% 100%, 0 85%);
+        box-shadow: 0 0 6px 2px #b8b294 inset;
+        z-index: 2;
+    }
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-label {
+    display: block;
+    font-weight: bold;
+    color: #4a4238;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    border: 1px solid #d6cfbb;
+    border-radius: 5px;
+    background: #fff;
+    font-family: 'Georgia', serif;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+    .form-input:focus {
+        outline: none;
+        border-color: #8a7f68;
+        box-shadow: 0 0 0 3px rgba(138, 127, 104, 0.2);
+    }
+
+textarea.form-input {
+    min-height: 200px;
+    resize: vertical;
+}
+
+.tag-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.tag-item {
+    display: flex;
+    align-items: center;
+    background: #f0e9d2;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    border: 1px solid #d6cfbb;
+}
+
+.tag-checkbox {
+    margin-right: 0.5rem;
+}
+
+.tag-label {
+    color: #6d6451;
+    cursor: pointer;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e0d9c0;
+}
+
+.btn-primary {
+    background: #8a7f68;
+    color: #fffef5;
+    padding: 0.8rem 1.8rem;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    border: 1px solid #766b56;
+    cursor: pointer;
+    font-family: "Raleway", sans-serif;
+    font-size: 1rem;
+}
+
+    .btn-primary:hover {
+        background: #6d6451;
+        transform: translateY(-2px);
+        box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.25);
+        color: #fffef5;
+    }
+
+.btn-back {
+    color: #8a7f68;
+    text-decoration: none;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: color 0.3s ease;
+}
+
+    .btn-back:hover {
+        color: #6d6451;
+    }
+
+.validation-error {
+    color: #c17a74;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+}
+
+/* TinyMCE Overrides */
+.tox-tinymce {
+    border: 1px solid #d6cfbb !important;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .container {
+        padding: 1rem;
+    }
+
+    .editor-form {
+        padding: 1.5rem;
+    }
+
+    .editor-title {
+        font-size: 1.8rem;
+    }
+
+    .form-actions {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: stretch;
+    }
+
+    .btn-back {
+        justify-content: center;
+    }
+}
+
+
+/* Custom Navigation Styles */
+.navbar {
+    background: #fffef5 !important;
+    border-bottom: 2px solid #d6cfbb !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    padding: 0.5rem 1rem;
+}
+
+.navbar-brand {
+    font-family: 'Georgia', serif;
+    font-weight: bold;
+    color: #4a4238 !important;
+    font-size: 1.8rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+    .navbar-brand i {
+        font-size: 1.5rem;
+        color: #8a7f68;
+    }
+
+.nav-link {
+    color: #6d6451 !important;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    padding: 0.5rem 1rem !important;
+    border-radius: 4px;
+    margin: 0 0.2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+    .nav-link:hover {
+        color: #4a4238 !important;
+        background: #f0e9d2;
+        transform: translateY(-1px);
+    }
+
+    .nav-link.active {
+        color: #4a4238 !important;
+        background: #f0e9d2;
+        font-weight: 600;
+    }
+
+.navbar-toggler {
+    border: none;
+    color: #8a7f68;
+}
+
+    .navbar-toggler:focus {
+        box-shadow: none;
+    }
+
+.navbar-nav {
+    gap: 0.5rem;
+}
+
+/* Login partial styling */
+.navbar .d-flex {
+    gap: 1rem;
+}
+
+.btn-login {
+    background: #8a7f68;
+    color: #fffef5 !important;
+    padding: 0.5rem 1.5rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: 1px solid #766b56;
+}
+
+    .btn-login:hover {
+        background: #6d6451;
+        color: #fffef5 !important;
+        transform: translateY(-1px);
+    }
+
+.btn-register {
+    background: transparent;
+    color: #8a7f68 !important;
+    padding: 0.5rem 1.5rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border: 1px solid #8a7f68;
+}
+
+    .btn-register:hover {
+        background: #8a7f68;
+        color: #fffef5 !important;
+    }
+
+/* User dropdown styling */
+.dropdown-menu {
+    background: #fffef5;
+    border: 1px solid #d6cfbb;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.dropdown-item {
+    color: #6d6451;
+    font-family: 'Raleway', sans-serif;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+    .dropdown-item:hover {
+        background: #f0e9d2;
+        color: #4a4238;
+    }
+
+/* Mobile responsiveness */
+@media (max-width: 991.98px) {
+    .navbar-nav {
+        gap: 0;
+    }
+
+    .nav-link {
+        margin: 0.2rem 0;
+        padding: 0.8rem 1rem !important;
+    }
+
+    .navbar .d-flex {
+        flex-direction: column;
+        gap: 0.5rem;
+        margin: 1rem 0;
+    }
+
+    .btn-login, .btn-register {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* Animation for navbar items */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.navbar-nav .nav-item {
+    animation: fadeIn 0.3s ease forwards;
+}
+
+    .navbar-nav .nav-item:nth-child(1) {
+        animation-delay: 0.1s;
+    }
+
+    .navbar-nav .nav-item:nth-child(2) {
+        animation-delay: 0.2s;
+    }
+
+    .navbar-nav .nav-item:nth-child(3) {
+        animation-delay: 0.3s;
+    }
+
+
+/* Modal styling */
+.modal-content {
+    background: #fffef5;
+    border: 1px solid #d6cfbb;
+    border-radius: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.modal-header {
+    border-bottom: 1px solid #e0d9c0;
+    padding: 1.5rem;
+}
+
+.modal-title {
+    color: #4a4238;
+    font-family: 'Georgia', serif;
+    font-weight: bold;
+}
+
+.modal-body {
+    padding: 1.5rem;
+}
+
+.btn-close {
+    color: #8a7f68;
+}
+
+.form-label {
+    color: #6d6451;
+    font-weight: 500;
+}
+
+.form-control {
+    border: 1px solid #d6cfbb;
+    border-radius: 4px;
+    padding: 0.75rem;
+    transition: all 0.3s ease;
+}
+
+    .form-control:focus {
+        border-color: #8a7f68;
+        box-shadow: 0 0 0 0.2rem rgba(138, 127, 104, 0.25);
+    }
+
+.text-danger {
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+.modal-footer {
+    border-top: 1px solid #e0d9c0;
+    padding: 1rem 1.5rem;
+}

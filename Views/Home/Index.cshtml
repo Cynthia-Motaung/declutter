@@ -1,0 +1,86 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="~/css/home.css" />
+
+
+<div class="hero-container">
+    <div class="journal-icon">
+        <i class="fas fa-book-open"></i>
+    </div>
+
+    <h1 class="display-4">Welcome to Your Digital Journal</h1>
+
+    <p class="subtitle">Capture your thoughts, reflect on your experiences, and preserve your memories in a beautiful, organized space.</p>
+
+    <div class="stats-container">
+        <div class="stat-item">
+            <div class="stat-number">365</div>
+            <div class="stat-label">Days of Reflection</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">∞</div>
+            <div class="stat-label">Memories Saved</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number">100%</div>
+            <div class="stat-label">Private & Secure</div>
+        </div>
+    </div>
+
+    <div class="cta-buttons">
+        <a asp-action="Index" asp-controller="Entries" class="btn-primary">
+            <i class="fas fa-book"></i> View Your Journal
+        </a>
+        <a asp-action="Create" asp-controller="Entries" class="btn-secondary">
+            <i class="fas fa-plus"></i> New Entry
+        </a>
+    </div>
+
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-lock"></i>
+            </div>
+            <h3 class="feature-title">Private & Secure</h3>
+            <p class="feature-description">Your thoughts are yours alone. We ensure complete privacy and security for all your entries.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-tags"></i>
+            </div>
+            <h3 class="feature-title">Organize with Tags</h3>
+            <p class="feature-description">Categorize and find your entries easily with custom tags and search functionality.</p>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-mobile-alt"></i>
+            </div>
+            <h3 class="feature-title">Always Accessible</h3>
+            <p class="feature-description">Access your journal from any device, anywhere, at any time.</p>
+        </div>
+    </div>
+
+    <div class="quote-container">
+        <p class="quote-text">"Journaling is like whispering to one's self and listening at the same time. It provides a unique opportunity to explore the landscape of your inner world."</p>
+        <p class="quote-author">- Mina Murray</p>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Simple animation for feature cards
+        const featureCards = document.querySelectorAll('.feature-card');
+
+        featureCards.forEach((card, index) => {
+            setTimeout(() => {
+                card.style.opacity = 1;
+                card.style.transform = 'translateY(0)';
+            }, 200 + (index * 100));
+        });
+    });
+</script>

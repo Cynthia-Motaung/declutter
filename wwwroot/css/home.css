@@ -1,0 +1,271 @@
+﻿* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Raleway", sans-serif;
+    background: #f7f3e9;
+    color: #333;
+    line-height: 1.6;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="none" stroke="rgba(153, 141, 115, 0.1)" stroke-width="1"/></svg>');
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.hero-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.journal-icon {
+    font-size: 4rem;
+    color: #8a7f68;
+    margin-bottom: 1.5rem;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+h1.display-4 {
+    font-size: 3.5rem;
+    color: #4a4238;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1rem;
+    letter-spacing: 1px;
+    font-weight: 700;
+}
+
+.subtitle {
+    font-size: 1.5rem;
+    color: #6d6451;
+    margin-bottom: 2.5rem;
+    max-width: 600px;
+    line-height: 1.5;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin: 3rem 0;
+    width: 100%;
+    max-width: 1000px;
+}
+
+.feature-card {
+    background: #fffef5;
+    border: 1px solid #d6cfbb;
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.1), inset 0 0 15px #f0e9d2;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+    .feature-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 6px 6px 12px rgba(0,0,0,0.15), inset 0 0 20px #f0e9d2;
+    }
+
+.feature-icon {
+    font-size: 2.5rem;
+    color: #8a7f68;
+    margin-bottom: 1rem;
+}
+
+.feature-title {
+    font-size: 1.3rem;
+    color: #4a4238;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.feature-description {
+    color: #6d6451;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.btn-primary {
+    background: #8a7f68;
+    color: #fffef5;
+    padding: 1rem 2rem;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    border: 1px solid #766b56;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+    .btn-primary:hover {
+        background: #6d6451;
+        transform: translateY(-2px);
+        box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.25);
+        color: #fffef5;
+    }
+
+.btn-secondary {
+    background: transparent;
+    color: #8a7f68;
+    padding: 1rem 2rem;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+    border: 2px solid #8a7f68;
+    transition: all 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+    .btn-secondary:hover {
+        background: #8a7f68;
+        color: #fffef5;
+        transform: translateY(-2px);
+    }
+
+.quote-container {
+    margin: 3rem 0;
+    padding: 2rem;
+    background: #fffef5;
+    border-radius: 10px;
+    border-left: 4px solid #8a7f68;
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.1);
+    max-width: 800px;
+}
+
+.quote-text {
+    font-style: italic;
+    color: #6d6451;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.quote-author {
+    color: #8a7f68;
+    font-weight: 600;
+    text-align: right;
+}
+
+.stats-container {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin: 2rem 0;
+    flex-wrap: wrap;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    color: #8a7f68;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    color: #6d6451;
+    font-size: 1rem;
+}
+
+/* Worn paper effect for feature cards */
+.feature-card::before,
+.feature-card::after {
+    content: "";
+    position: absolute;
+    pointer-events: none;
+    border-radius: 10px;
+}
+
+.feature-card::before {
+    top: -8px;
+    left: -8px;
+    width: 30px;
+    height: 30px;
+    background: linear-gradient(135deg, transparent 20%, #fffef5 21%, #fffef5 80%, transparent 81%);
+    filter: brightness(0.9);
+    clip-path: polygon(0 0, 100% 15%, 15% 100%, 0 100%);
+    box-shadow: 0 0 6px 2px #b8b294 inset;
+    z-index: 2;
+}
+
+.feature-card::after {
+    bottom: -8px;
+    right: -8px;
+    width: 30px;
+    height: 30px;
+    background: linear-gradient(315deg, transparent 20%, #fffef5 21%, #fffef5 80%, transparent 81%);
+    filter: brightness(0.85);
+    clip-path: polygon(85% 0, 100% 0, 100% 100%, 0 85%);
+    box-shadow: 0 0 6px 2px #b8b294 inset;
+    z-index: 2;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    h1 .display-4 {
+        font-size: 2.5rem;
+    }
+
+    .subtitle {
+        font-size: 1.2rem;
+    }
+
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .btn-primary, .btn-secondary {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .stats-container {
+        gap: 1.5rem;
+    }
+
+    .stat-number {
+        font-size: 2rem;
+    }
+}

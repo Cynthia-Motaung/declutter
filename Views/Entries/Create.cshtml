@@ -1,0 +1,88 @@
+﻿@model Entry
+
+@{
+    ViewData["Title"] = "Create Entry";
+
+    var availableTags = ViewBag.AvailableTags as List<declutter.Models.Tag>;
+}
+
+
+
+<div class="container">
+    <main role="main" class="pb-3">
+        <div class="journal-editor">
+            <div class="editor-header">
+                <h1 class="editor-title">New Entry</h1>
+            </div>
+            <form asp-action="Create" method="post" class="editor-form">
+                <div asp-validation-summary="ModelOnly" class="validation-error"></div>
+                <div class="form-group">
+                    <label asp-for="Title" class="form-label">Entry Title</label>
+                    <input asp-for="Title" class="form-input" placeholder="Give your entry a title..." />
+                    <span asp-validation-for="Title" class="validation-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Content" class="form-label">Your Thoughts</label>
+                    <textarea asp-for="Content" id="tiny"></textarea>
+                    <span asp-validation-for="Content" class="validation-error"></span>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Tags</label>
+                    <div class="tag-container">
+                        <!-- Sample tags - these would be dynamically generated in your actual application -->
+                        <div class="tag-item">
+                            <input type="checkbox" id="tag_1" name="selectedTagIds" value="1" class="tag-checkbox" />
+                            <label for="tag_1" class="tag-label">Reflection</label>
+                        </div>
+                        <div class="tag-item">
+                            <input type="checkbox" id="tag_2" name="selectedTagIds" value="2" class="tag-checkbox" />
+                            <label for="tag_2" class="tag-label">Personal</label>
+                        </div>
+                        <div class="tag-item">
+                            <input type="checkbox" id="tag_3" name="selectedTagIds" value="3" class="tag-checkbox" />
+                            <label for="tag_3" class="tag-label">Growth</label>
+                        </div>
+                        <div class="tag-item">
+                            <input type="checkbox" id="tag_4" name="selectedTagIds" value="4" class="tag-checkbox" />
+                            <label for="tag_4" class="tag-label">Challenges</label>
+                        </div>
+                        <div class="tag-item">
+                            <input type="checkbox" id="tag_5" name="selectedTagIds" value="5" class="tag-checkbox" />
+                            <label for="tag_5" class="tag-label">Inspiration</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-save"></i> Save
+                    </button>
+                    <a asp-action="Index" class="btn-back">
+                        <i class="fas fa-arrow-left"></i> Back to Journal
+                    </a>
+                </div>
+            </form>
+        </div>
+    </main>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    @*  <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+        tinymce.init({
+            selector: 'textarea[name="Content"]', // Selects the textarea for the Content property
+            plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak codesample table visualblocks code fullscreen insertdatetime media nonbreaking save table directionality emoticons template paste textpattern autoresize',
+            toolbar_mode: 'floating',
+            toolbar: 'undo redo | formatselect | ' +
+                     'bold italic backcolor | alignleft aligncenter ' +
+                     'alignright alignjustify | bullist numlist outdent indent | ' +
+                     'removeformat | help | codesample | link image',
+            content_style: 'body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif; font-size: 14px; }',
+            readonly: false // Explicitly set to false to ensure it's not read-only
+        });
+    </script> *@
+}
