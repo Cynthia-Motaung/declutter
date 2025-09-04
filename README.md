@@ -230,3 +230,4 @@ TinyMCE for the rich text editor
 Font Awesome for the beautiful icons
 
 Toastr for notifications
+
