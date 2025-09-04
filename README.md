@@ -50,7 +50,7 @@ cd declutter-journal
 
 Configure Database
 Update the connection string in appsettings.json:
-
+```json
 "ConnectionStrings": {
   "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=DeclutterDb;Trusted_Connection=true;MultipleActiveResultSets=true"
 }
