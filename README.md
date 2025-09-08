@@ -44,124 +44,124 @@ A beautiful, intuitive digital journal application designed to help you capture 
 ### Installation
 
 
-📖 How to Use
-Creating Entries
+### 📖 How to Use
+**Creating Entries**
 
-Click "Create New Entry" from the homepage or navigation bar
+- Click "Create New Entry" from the homepage or navigation bar
 
-Add a title for your journal entry
+- Add a title for your journal entry
 
-Use the rich text editor to write your content
+- Use the rich text editor to write your content
 
-Select relevant tags or create new ones
+- Select relevant tags or create new ones
 
-Click "Create" to save your entry
+- Click "Create" to save your entry
 
-Managing Entries
+**Managing Entries**
 
-View: Click "View" to read entries in a beautiful modal
+- View: Click "View" to read entries in a beautiful modal
 
-Edit: Click "Edit" to modify existing entries
+- Edit: Click "Edit" to modify existing entries
 
-Delete: Click "Delete" and confirm to remove entries
+- Delete: Click "Delete" and confirm to remove entries
 
-Organize: Use tags to categorize and filter your entries
+- Organize: Use tags to categorize and filter your entries
 
-Tags System
+**Tags System**
 
-Create custom tags for categories (e.g., #reflection, #goals, #memories)
+- Create custom tags for categories (e.g., #reflection, #goals, #memories)
 
-Filter entries by tags for better organization
+- Filter entries by tags for better organization
 
-Manage tags during entry creation or editing
+- Manage tags during entry creation or editing
 
-🛠️ Technology Stack
-Backend
+###🛠️ Technology Stack
+**Backend**
 
-ASP.NET Core 6.0 – Web framework
+- ASP.NET Core 6.0 – Web framework
 
-Entity Framework Core – ORM and data access
+- Entity Framework Core – ORM and data access
 
-ASP.NET Core Identity – Authentication and authorization
+- ASP.NET Core Identity – Authentication and authorization
 
-SQL Server – Database management
+- SQL Server – Database management
 
-Frontend
+**Frontend**
 
-Bootstrap 5 – Responsive UI framework
+- Bootstrap 5 – Responsive UI framework
 
-jQuery – DOM manipulation and AJAX
+- jQuery – DOM manipulation and AJAX
 
-TinyMCE – Rich text editor
+- TinyMCE – Rich text editor
 
-Toastr – Notification system
+- Toastr – Notification system
 
-Font Awesome – Icons and UI elements
+- Font Awesome – Icons and UI elements
 
-Development Tools
+**Development Tools**
 
-Visual Studio 2022 / VS Code – IDE
+- Visual Studio 2022 / VS Code – IDE
 
-Git – Version control
+- Git – Version control
 
-SQL Server Management Studio – Database management
+- SQL Server Management Studio – Database management
 
 🤝 Contributing
 
-We welcome contributions to improve Declutter! Here's how you can help:
+**We welcome contributions to improve Declutter! Here's how you can help:**
 
-Fork the repository
+- Fork the repository
 
-Create a feature branch
+- Create a feature branch
 
-git checkout -b feature/amazing-feature
-
-
-Commit your changes
-
-git commit -m "Add amazing feature"
+- git checkout -b feature/amazing-feature
 
 
-Push to the branch
+- Commit your changes
 
-git push origin feature/amazing-feature
+- git commit -m "Add amazing feature"
 
 
-Open a Pull Request
+- Push to the branch
 
-Development Guidelines
+- git push origin feature/amazing-feature
 
-Follow ASP.NET Core best practices
 
-Maintain consistent coding style
+- Open a Pull Request
 
-Write meaningful commit messages
+### Development Guidelines
 
-Test your changes thoroughly
+- Follow ASP.NET Core best practices
 
-📄 License
+- Maintain consistent coding style
+
+- Write meaningful commit messages
+
+- Test your changes thoroughly
+
+### 📄 License
 
 This project is licensed under the MIT License – see the LICENSE.md file for details.
 
-🆘 Support
+### 🆘 Support
 
-If you encounter any issues or have questions:
+**If you encounter any issues or have questions:**
 
-Check the FAQ section below
+- Check the FAQ section below
 
-Search existing GitHub Issues
+- Search existing GitHub Issues
 
-Create a new issue with detailed information
+- Create a new issue with detailed information
 
-❓ FAQ
+### ❓ FAQ
 
-Q: How do I reset my password?
+Q: **How do I reset my password?**
 A: Use the "Forgot Password" link on the login page.
 
-Q: Can I export my journal entries?
+Q: **Can I export my journal entries?**
 A: Export functionality is planned for a future release.
 
-Q: Is my data backed up?
+Q: **Is my data backed up?**
 A: Regular database backups are recommended for production deployments.
 
 ### 🚀 Future Enhancements
