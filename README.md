@@ -75,7 +75,7 @@ A beautiful, intuitive digital journal application designed to help you capture 
 
 - Manage tags during entry creation or editing
 
-###🛠️ Technology Stack
+### 🛠️ Technology Stack
 **Backend**
 
 - ASP.NET Core 6.0 – Web framework
