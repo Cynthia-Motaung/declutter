@@ -186,10 +186,10 @@ Offline capability
 
 ### 🙏 Acknowledgments
 
--- Bootstrap – Responsive UI framework
+- Bootstrap – Responsive UI framework
 
--- TinyMCE – Rich text editor
+- TinyMCE – Rich text editor
 
--- Font Awesome – Icons
+- Font Awesome – Icons
 
--- Toastr – Notifications
+- Toastr – Notifications
