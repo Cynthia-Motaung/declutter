@@ -1,13 +1,12 @@
 ﻿using declutter.Data;
 using declutter.Models;
-
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using System.Security.Claims;
-using System.Text.Json;
+
 
 namespace declutter.Controllers
 {
@@ -53,7 +52,7 @@ namespace declutter.Controllers
             return View(entries);
         }
 
-        // GET: Entries/Details/5
+    
         // Displays the details of a specific entry, ensuring it belongs to the current user.
         public async Task<IActionResult> Details(int? id)
         {
@@ -80,8 +79,6 @@ namespace declutter.Controllers
             return View(entry);
         }
 
-        // GET: Entries/Create
-        // Displays the form for creating a new entry.
         public async Task<IActionResult> Create()
         {
             // Get the current user's ID.
@@ -101,8 +98,6 @@ namespace declutter.Controllers
             return View();
         }
 
-        // POST: Entries/Create
-        // Handles the submission of the new entry form.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Title,Content,Tags")] Entry entry, List<int> selectedTagIds)
@@ -145,8 +140,6 @@ namespace declutter.Controllers
             return View(entry);
         }
 
-        // GET: Entries/Edit/5
-        // Displays the form for editing an existing entry, ensuring it belongs to the current user.
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -179,8 +172,6 @@ namespace declutter.Controllers
             return View(entry);
         }
 
-        // POST: Entries/Edit/5
-        // Handles the submission of the edited entry form.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Title,Content")] Entry entry, List<int> selectedTagIds)
@@ -261,8 +252,6 @@ namespace declutter.Controllers
             return View(entry);
         }
 
-        // GET: Entries/Delete/5
-        // Displays the confirmation page for deleting an entry, ensuring it belongs to the current user.
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
