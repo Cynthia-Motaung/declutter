@@ -164,25 +164,25 @@ A: Export functionality is planned for a future release.
 Q: Is my data backed up?
 A: Regular database backups are recommended for production deployments.
 
-🚀 Future Enhancements
+### 🚀 Future Enhancements
 
-Mobile app version
+- Mobile app version
 
-Entry export functionality (PDF, Word)
+- Entry export functionality (PDF, Word)
 
-Advanced search with filters
+- Advanced search with filters
 
-Entry templates
+- Entry templates
 
-Mood tracking
+- Mood tracking
 
-Entry reminders and prompts
+- Entry reminders and prompts
 
-Data analytics and insights
+- Data analytics and insights
 
-Social sharing (optional)
+- Social sharing (optional)
 
-Offline capability
+- Offline capability
 
 ### 🙏 Acknowledgments
 
