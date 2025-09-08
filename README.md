@@ -106,30 +106,6 @@ Git – Version control
 
 SQL Server Management Studio – Database management
 
-🔧 Configuration
-App Settings
-
-The application can be configured through appsettings.json:
-
-{
-  "ConnectionStrings": {
-    "DefaultConnection": "Your connection string here"
-  },
-  "Logging": {
-    "LogLevel": {
-      "Default": "Information",
-      "Microsoft.AspNetCore": "Warning"
-    }
-  },
-  "AllowedHosts": "*"
-}
-
-Environment Settings
-
-Development: Debug mode enabled, detailed errors
-
-Production: Optimized for performance, secure settings
-
 🤝 Contributing
 
 We welcome contributions to improve Declutter! Here's how you can help:
