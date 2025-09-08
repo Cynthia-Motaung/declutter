@@ -43,39 +43,6 @@ A beautiful, intuitive digital journal application designed to help you capture 
 
 ### Installation
 
-**Clone the Repository**
-```bash
-git clone https://github.com/Cynthia-Motaung/declutter.git
-cd declutter-journal 
-
-Configure Database
-Update the connection string in appsettings.json:
-```json
-"ConnectionStrings": {
-  "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=DeclutterDb;Trusted_Connection=true;MultipleActiveResultSets=true"
-}
-
-
-Apply Database Migrations
-
-dotnet ef database update
-
-
-Run the Application
-
-dotnet run
-
-
-Open in Browser
-Navigate to https://localhost:7000 (or the port shown in your terminal)
-
-First Time Setup
-
-Register a new account using the sign-up form
-
-Verify your email address (if email confirmation is enabled)
-
-Start creating your first journal entry!
 
 📖 How to Use
 Creating Entries
