@@ -1,5 +1,7 @@
 using declutter.Data;
 using declutter.Models;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,6 +19,20 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => options.S
     .AddDefaultTokenProviders();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+
+// Add authentication services (modify your existing authentication setup)
+builder.Services.AddAuthentication()
+    .AddGoogle(options =>
+    {
+        options.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+        options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+        options.Scope.Add("profile");
+        options.Scope.Add("email");
+
+        // Optional: Map Google claims to ASP.NET Identity claims
+        options.ClaimActions.MapJsonKey("picture", "picture");
+        options.ClaimActions.MapJsonKey("email_verified", "email_verified");
+    });
 
 var app = builder.Build();
 
@@ -37,6 +53,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
