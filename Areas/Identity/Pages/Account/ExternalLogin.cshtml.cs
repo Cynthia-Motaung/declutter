@@ -157,6 +157,17 @@ namespace declutter.Areas.Identity.Pages.Account
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
 
+                // Set additional user properties from external login info
+                user.FirstName = info.Principal.FindFirstValue(ClaimTypes.GivenName);
+                user.LastName = info.Principal.FindFirstValue(ClaimTypes.Surname);
+
+                // Handle Google profile picture
+                var googlePicture = info.Principal.FindFirstValue("picture");
+                if (!string.IsNullOrEmpty(googlePicture))
+                {
+                    await DownloadAndSaveProfilePicture(user, googlePicture);
+                }
+
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
@@ -165,20 +176,37 @@ namespace declutter.Areas.Identity.Pages.Account
                     {
                         _logger.LogInformation("User created an account using {Name} provider.", info.LoginProvider);
 
+                        // For external logins, email is typically already verified by the provider
+                        if (info.LoginProvider == "Google")
+                        {
+                            // Mark email as confirmed for Google users
+                            var emailConfirmed = info.Principal.FindFirstValue("email_verified");
+                            if (bool.TryParse(emailConfirmed, out var isVerified) && isVerified)
+                            {
+                                user.EmailConfirmed = true;
+                                await _userManager.UpdateAsync(user);
+                            }
+                        }
+
                         var userId = await _userManager.GetUserIdAsync(user);
-                        var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                        code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                        var callbackUrl = Url.Page(
-                            "/Account/ConfirmEmail",
-                            pageHandler: null,
-                            values: new { area = "Identity", userId = userId, code = code },
-                            protocol: Request.Scheme);
 
-                        await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                            $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                        // Only send confirmation email if email is not already verified
+                        if (!user.EmailConfirmed)
+                        {
+                            var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                            code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+                            var callbackUrl = Url.Page(
+                                "/Account/ConfirmEmail",
+                                pageHandler: null,
+                                values: new { area = "Identity", userId = userId, code = code },
+                                protocol: Request.Scheme);
 
-                        // If account confirmation is required, we need to show the link if we don't have a real email sender
-                        if (_userManager.Options.SignIn.RequireConfirmedAccount)
+                            await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                                $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                        }
+
+                        // If account confirmation is required and not confirmed, show confirmation page
+                        if (_userManager.Options.SignIn.RequireConfirmedAccount && !user.EmailConfirmed)
                         {
                             return RedirectToPage("./RegisterConfirmation", new { Email = Input.Email });
                         }
@@ -196,6 +224,35 @@ namespace declutter.Areas.Identity.Pages.Account
             ProviderDisplayName = info.ProviderDisplayName;
             ReturnUrl = returnUrl;
             return Page();
+        }
+
+        private async Task DownloadAndSaveProfilePicture(ApplicationUser user, string pictureUrl)
+        {
+            try
+            {
+                using var httpClient = new HttpClient();
+
+                // Set a timeout and user agent to avoid blocking
+                httpClient.Timeout = TimeSpan.FromSeconds(10);
+                httpClient.DefaultRequestHeaders.UserAgent.ParseAdd("Mozilla/5.0 (compatible; MyApp/1.0)");
+
+                var imageBytes = await httpClient.GetByteArrayAsync(pictureUrl);
+
+                // Optional: Validate image size and type
+                if (imageBytes.Length > 0 && imageBytes.Length <= 2 * 1024 * 1024) // Max 2MB
+                {
+                    user.ProfilePicture = imageBytes;
+                }
+                else
+                {
+                    _logger.LogWarning("Profile picture from Google is too large or empty: {Url}", pictureUrl);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to download profile picture from Google: {Url}", pictureUrl);
+                // Continue without profile picture - it's not critical
+            }
         }
 
         private ApplicationUser CreateUser()
