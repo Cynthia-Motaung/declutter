@@ -26,7 +26,7 @@ A beautiful, intuitive digital journal application designed to help you capture 
 - **Privacy-Focused:** No data sharing with third parties  
 
 ### ⚡ Modern Technology Stack
-- **ASP.NET Core 6.0** – Robust backend framework  
+- **ASP.NET Core 8.0** – Robust backend framework  
 - **Entity Framework Core** – Modern ORM for database operations  
 - **Bootstrap 5** – Responsive frontend framework  
 - **Toastr Notifications** – Beautiful alert system for user feedback  
@@ -37,8 +37,8 @@ A beautiful, intuitive digital journal application designed to help you capture 
 ## 🚀 Getting Started
 
 ### Prerequisites
-- .NET 6.0 SDK  
-- SQL Server (Express edition is sufficient)  
+- .NET 8.0 SDK  
+- SQL Server 
 - Git  
 
 ### Installation
@@ -78,7 +78,7 @@ A beautiful, intuitive digital journal application designed to help you capture 
 ### 🛠️ Technology Stack
 **Backend**
 
-- ASP.NET Core 6.0 – Web framework
+- ASP.NET Core 8.0 – Web framework
 
 - Entity Framework Core – ORM and data access
 
@@ -108,7 +108,7 @@ A beautiful, intuitive digital journal application designed to help you capture 
 
 🤝 Contributing
 
-**We welcome contributions to improve Declutter! Here's how you can help:**
+**I welcome contributions to improve Declutter! Here's how you can help:**
 
 - Fork the repository
 
@@ -141,7 +141,7 @@ A beautiful, intuitive digital journal application designed to help you capture 
 
 ### 📄 License
 
-This project is licensed under the MIT License – see the LICENSE.md file for details.
+No License 
 
 ### 🆘 Support
 
@@ -180,7 +180,7 @@ A: Regular database backups are recommended for production deployments.
 
 - Data analytics and insights
 
-- Social sharing (optional)
+- Social sharing 
 
 - Offline capability
 
