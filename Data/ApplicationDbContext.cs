@@ -17,15 +17,14 @@ namespace declutter.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            // Call the base method to configure Identity tables
             base.OnModelCreating(builder);
 
-            //Configuring table names for PostgreSQL convention (lowercase snake_case) ---
+            //Configuring table names for PostgreSQL convention snake_case
             builder.Entity<ApplicationUser>().ToTable("users");
             builder.Entity<Entry>().ToTable("entries");
             builder.Entity<Tag>().ToTable("tags");
 
-            // Configure Identity framework tables for PostgreSQL
+            // Configuring Identity framework tables for PostgreSQL
             builder.Entity<IdentityRole>().ToTable("roles");
             builder.Entity<IdentityUserRole<string>>().ToTable("user_roles");
             builder.Entity<IdentityUserClaim<string>>().ToTable("user_claims");
@@ -33,7 +32,7 @@ namespace declutter.Data
             builder.Entity<IdentityRoleClaim<string>>().ToTable("role_claims");
             builder.Entity<IdentityUserToken<string>>().ToTable("user_tokens");
 
-            // Configure column names for ApplicationUser properties
+            // Configuring column names for ApplicationUser properties
             builder.Entity<ApplicationUser>().Property(u => u.Id).HasColumnName("id");
             builder.Entity<ApplicationUser>().Property(u => u.UserName).HasColumnName("username");
             builder.Entity<ApplicationUser>().Property(u => u.NormalizedUserName).HasColumnName("normalized_username");
@@ -51,26 +50,26 @@ namespace declutter.Data
             builder.Entity<ApplicationUser>().Property(u => u.AccessFailedCount).HasColumnName("access_failed_count");
             builder.Entity<ApplicationUser>().Property(u => u.CreatedAt).HasColumnName("created_at");
 
-            // Configure the many-to-many relationship between Entry and Tag
+            // Configuring the many-to-many relationship between Entry and Tag
             builder.Entity<Entry>()
                 .HasMany(e => e.Tags)
                 .WithMany(t => t.Entries)
                 .UsingEntity(j => j.ToTable("entry_tags"));
 
-            // Configure the one-to-many relationship between ApplicationUser and Entry
+            // Configuring the one-to-many relationship between ApplicationUser and Entry
             builder.Entity<Entry>()
                 .HasOne(e => e.Author)
                 .WithMany(u => u.Entries)
                 .HasForeignKey(e => e.AuthorId);
 
-            // Configure column names for Entry properties
+            // Configuring column names for Entry properties
             builder.Entity<Entry>().Property(e => e.Id).HasColumnName("id");
             builder.Entity<Entry>().Property(e => e.Title).HasColumnName("title");
             builder.Entity<Entry>().Property(e => e.Content).HasColumnName("content");
             builder.Entity<Entry>().Property(e => e.CreatedAt).HasColumnName("created_at");
             builder.Entity<Entry>().Property(e => e.AuthorId).HasColumnName("author_id");
 
-            // Further configurations for properties
+            // Configuring properties for tag Entity 
             builder.Entity<Tag>()
                 .HasIndex(t => t.Name)
                 .IsUnique();
@@ -79,7 +78,7 @@ namespace declutter.Data
             builder.Entity<Tag>().Property(t => t.Id).HasColumnName("id");
             builder.Entity<Tag>().Property(t => t.Name).HasColumnName("name");
 
-            // Configure validation attributes for Entry properties
+            // Configuring validation attributes for Entry properties
             builder.Entity<Entry>().Property(e => e.Title).IsRequired().HasMaxLength(200);
             builder.Entity<Entry>().Property(e => e.Content).IsRequired();
             builder.Entity<Entry>().Property(e => e.CreatedAt).IsRequired();
