@@ -146,7 +146,7 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Move Toastr script here, after jQuery -->
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="https://cdn.tiny.cloud/1/bgy7ujsun5fczcmimpvmmwa3ihko1d1mbz1jmek6xp3oqn6i/tinymce/8/tinymce.min.js" referrerpolicy="origin" crossorigin="anonymous"></script>
 
@@ -158,13 +158,13 @@
         });
     </script>
 
-    <!-- Include the notification partial -->
+    
     <partial name="_Notification" />
 
     @await RenderSectionAsync("Scripts", required: false)
 
     <script>
-        // Add active class to current page navigation item
+        
         document.addEventListener('DOMContentLoaded', function() {
             const currentUrl = window.location.pathname;
             const navLinks = document.querySelectorAll('.nav-link');
