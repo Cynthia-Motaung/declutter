@@ -16,14 +16,14 @@ namespace declutter.Controllers
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        // Constructor to inject the ApplicationDbContext and UserManager.
+      
         public EntriesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _userManager = userManager;
         }
 
-        // Displays a list of entries belonging to the currently logged-in user.
+        // Displays a list of entries
         public async Task<IActionResult> Index()
         {
             // Get the current user's ID.
@@ -41,7 +41,7 @@ namespace declutter.Controllers
                 .OrderByDescending(e => e.CreatedAt)
                 .ToListAsync();
 
-            // Get all available tags for the filter (only tags used by this user)
+            // Get all available tags for the filter
             var allTags = await _context.Tags
                 .Where(t => t.Entries.Any(e => e.AuthorId == userId))
                 .Distinct()
@@ -53,7 +53,7 @@ namespace declutter.Controllers
         }
 
     
-        // Displays the details of a specific entry, ensuring it belongs to the current user.
+        // Displays the details of a specific entry
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -65,7 +65,7 @@ namespace declutter.Controllers
             // Get the current user's ID.
             var userId = GetCurrentUserId();
 
-            // Find the entry by ID and ensure it belongs to the current user.
+            // Find the entry by ID 
             var entry = await _context.Entries
                                       .Include(e => e.Tags)
                                       .FirstOrDefaultAsync(e => e.Id == id && e.AuthorId == userId);
@@ -111,7 +111,7 @@ namespace declutter.Controllers
                 return Unauthorized();
             }
 
-            // Manually set UserId and CreatedAt as they are not bindable from the form.
+            // Manually set UserId and CreateAt
             entry.AuthorId = userId;
             entry.CreatedAt = DateTime.Now;
 
@@ -151,7 +151,7 @@ namespace declutter.Controllers
             // Get the current user's ID.
             var userId = GetCurrentUserId();
 
-            // Find the entry by ID and ensure it belongs to the current user.
+            // Find the entry by ID 
             // Include Tags to display current tags in the edit form.
             var entry = await _context.Entries
                                       .Include(e => e.Tags)
@@ -190,7 +190,7 @@ namespace declutter.Controllers
                 return Unauthorized();
             }
 
-            // Retrieve the existing entry from the database, including its current tags.
+            // Retrieve the existing entry from the database
             var entryToUpdate = await _context.Entries
                                               .Include(e => e.Tags)
                                               .FirstOrDefaultAsync(e => e.Id == id && e.AuthorId == userId);
