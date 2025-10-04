@@ -20,7 +20,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => options.S
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
-// Add authentication services (modify your existing authentication setup)
+// Add authentication services 
 builder.Services.AddAuthentication()
     .AddGoogle(options =>
     {
@@ -29,14 +29,14 @@ builder.Services.AddAuthentication()
         options.Scope.Add("profile");
         options.Scope.Add("email");
 
-        // Optional: Map Google claims to ASP.NET Identity claims
+        // Mapping Google claims to ASP.NET Identity claims
         options.ClaimActions.MapJsonKey("picture", "picture");
         options.ClaimActions.MapJsonKey("email_verified", "email_verified");
     });
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configuring the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
